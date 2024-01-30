@@ -1,0 +1,43 @@
+<%- include("partials/header.ejs") %>
+
+<!-- <button type="button" class="btn btn-success">Success</button> -->
+<a href="/"><button type="button" class="btn btn-success">HomeWork</button></a>
+<a href="/work"><button type="button" class="btn btn-danger">Work</button></a>
+
+<div class="container">
+    <div class="pad">
+<h2><%= dayOfWeek%>, <%= monthOfYear %>, <%= dateOfMonth %></h2>
+<%  if(locals.thoughts){%>
+    <!-- Loops through thoughts list -->
+        <%  thoughts.forEach(function(task) {%>
+
+            <!-- Lists Tasks -->
+            <ul>
+            <li><input type="checkbox" id="todo">
+            <label for="todo"><%= task %></label></li>
+        </ul>
+<% })}%>
+    
+
+
+    <div class="form">
+    <form action="/submitWork" method="POST">
+        <input type="text"name="text" class="feedback-input" placeholder="Your Tasks">
+        <input type="submit" value="+" class="btn btn-warning rounded-pill px-3 py-1"/>
+      </form>
+    </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<%- include("partials/footer.ejs") %>

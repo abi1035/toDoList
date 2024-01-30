@@ -1,0 +1,74 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    /* border: 10px solid black; */
+    /* height: 500px; */
+    position: relative;
+    top: 90px;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+body{
+    background-color:  #FFBF34;
+    font-family: 'Comic Neue', cursive;
+    font-size: medium;
+}
+
+h1{
+    /* position: relative;
+    right: 25px; */
+}
+
+ul {
+    padding: 0;
+}
+
+.pencil{
+    height: 150px;
+    position: relative;
+    left: 1050px;
+    bottom: 500px;
+}
+
+.eraser{
+    height: 150px;
+    position: relative;
+    bottom: 100px;
+}
+
+.ruler{
+    height: 150px;
+    position: relative;
+    bottom: 500px;
+    right: 50px;
+}
+
+.pad{
+    /* border: 10px solid red; */
+    /* height: 300px;
+    width: 300px; */
+    box-shadow: 5px 5px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    background-color: #F5F5DC;
+    border-radius: 20px;
+    min-width: 300px;
+    width: 80%;
+    max-width: 400px;
+    min-height: 600px;
+    border: 4px solid;
+    overflow: hidden;
+}
+
+#todo:checked+label {
+    color: black;
+    text-decoration: line-through;
+}
+
+ul {
+    list-style-type: none;
+}
