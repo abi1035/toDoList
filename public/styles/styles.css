@@ -14,12 +14,29 @@ body{
     background-color:  #FFBF34;
     font-family: 'Comic Neue', cursive;
     font-size: medium;
+    padding: 0;
+    margin: 0;
 }
 
-h1{
-    /* position: relative;
-    right: 25px; */
+button{
+    padding: 0;
+    border: none;
+    background: none;
 }
+
+.toDoList{
+    display: flex;
+    width: 280px;
+}
+
+.toDoContent{
+    /* border: 10px solid red; */
+    width: 250px;
+    display: flex;
+    gap: 8px;
+}
+
+
 
 ul {
     padding: 0;
@@ -38,8 +55,23 @@ ul {
     bottom: 100px;
 }
 
+.briefcase{
+    height: 150px;
+    position: relative;
+    bottom: 100px;
+    left: 200px;
+    transform: rotate(45deg);
+}
+
 .ruler{
     height: 150px;
+    position: relative;
+    bottom: 500px;
+    right: 50px;
+}
+
+.pen{
+    height: 100px;
     position: relative;
     bottom: 500px;
     right: 50px;
@@ -71,4 +103,57 @@ ul {
 
 ul {
     list-style-type: none;
+}
+
+.header{
+    /* border: 10px solid red; */
+    display: flex;
+    padding: 20px 0px 20px 0px;
+    background-color:  #ffc74f;
+
+}
+
+.headerLink{
+    /* border: solid 10px red; */
+    display: flex;
+    width: 630px;
+    gap: 20px;
+    /* justify-content: space-around; */
+    padding: 0px 8px;
+    
+}
+
+.homeworkLink:hover{
+    color: #ffffff;
+}
+
+.workLink:hover{
+    color: #ffffff;
+}
+
+
+a, u {
+    text-decoration: none;
+    color: black;
+  }
+
+  footer{
+    /* border: 10px solid red; */
+    display: flex;
+    padding: 20px 0px 20px 0px;
+    background-color:  #ffc74f;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+input {
+    border:0;
+    border-bottom: 2px solid #fdb377;
+    outline:0;
+    background-color: transparent;
+}
+input:focus {
+    outline:none!important;
 }

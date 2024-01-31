@@ -1,10 +1,38 @@
 import express from "express";
+import bodyParser from "body-parser";
 const app=express();
 const port=3000;
 var taskList=[];
+let taskId=2;
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"))
+import pg from "pg";
+
+
+const db = new pg.Client({
+  user: "postgres",
+  host: "localhost",
+  database: "xxxxxxx",
+  password: "xxxxxxx",
+  port: xxxx,
+});
+
+
+
+
+db.connect();
+
+
+db.query("SELECT * FROM xxxx", (err, res) => {
+  if (err) {
+    console.error("Error executing query", err.stack);
+  } else {
+    // let items = res.rows;
+  }
+  // db.end();
+});
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
 const date = new Date();
 const day=date.getDay()
@@ -18,39 +46,115 @@ var whatMonth=monthList[month];
 const dateNumber=date.getDate()
 
 
-app.get("/",(req,res)=>{
-    res.render("index.ejs",{dayOfWeek:whatDay,monthOfYear:whatMonth,dateOfMonth:dateNumber});
+// Reads Data
+app.get("/",async (req,res)=>{
+  try {
+    const result = await db.query("SELECT * FROM xxxx");
+    let items = result.rows;
+    // console.log(items)
+    res.render("index.ejs", {
+      dayOfWeek:whatDay,
+      monthOfYear:whatMonth,
+      dateOfMonth:dateNumber,
+      thoughts: items,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+  
+
 })
 
-app.post("/submit",(req,res)=>{
-    // LETS TRY PUTTING THIS IN AN ARRAY NO
+
+// Deletes Data
+app.post("/delete",async (req,res)=>{
+  let selectedId=req.body.selectedItemId
+  // console.log(selectedId)
+await db.query("DELETE FROM xxxx WHERE id= $1",[selectedId]);
+  res.redirect("/");
+
+})
+
+
+
+
+// Creates Data
+app.post("/submit",async (req,res)=>{
+    const item = req.body.text;
+  
+  try{
+    await db.query("INSERT INTO xxxx (tasks) VALUES ($1)",[item])
+  res.redirect("/");
+  } catch{
+    console.log(err)
+  }
     
-    var tasks=req.body.text;
-    taskList.push(tasks);
-    // console.log(nameList);
-    // console.log(titleList);
-    // console.log(blogList);
-    res.render("index.ejs", {thoughts:taskList, dayOfWeek:whatDay,monthOfYear:whatMonth,dateOfMonth:dateNumber});
+    
 })
 
+// Updates Data
+app.post("/edit",async (req,res)=>{
+  let updateId=req.body.updatedItemId;
+  let updateTask=req.body.updatedItemTask
+  try{
+    await db.query("UPDATE xxxx SET tasks=$1 WHERE id=$2",[updateTask, updateId]);
+    res.redirect("/");
+} catch{
+  console.log(err);
+}
+})
 
-app.get("/work",(req,res)=>{
-  res.render("work.ejs",{dayOfWeek:whatDay,monthOfYear:whatMonth,dateOfMonth:dateNumber})
+// WORK 
+// READ
+app.get("/work",async (req,res)=>{
+  try {
+    const result = await db.query("SELECT * FROM xxxx");
+    let items = result.rows;
+    // console.log(items)
+    res.render("work.ejs", {
+      dayOfWeek:whatDay,
+      monthOfYear:whatMonth,
+      dateOfMonth:dateNumber,
+      thoughts: items,
+    });
+  } catch (err) {
+    console.log(err);
+  }
 
 })
 
-app.post("/submitWork",(req,res)=>{
+// CREATE
+app.post("/submitWork", async(req,res)=>{
   var tasks=req.body.text;
-    taskList.push(tasks);
-    // console.log(nameList);
-    // console.log(titleList);
-    // console.log(blogList);
-    res.render("work.ejs", {thoughts:taskList, dayOfWeek:whatDay,monthOfYear:whatMonth,dateOfMonth:dateNumber});
+   
+  try{
+    await db.query("INSERT INTO xxxx (tasks) VALUES ($1)",[tasks])
+    res.redirect("/work");
+  } catch(err){
+    console.log(err)
+  }
 })
 
+// UPDATE
+app.post("/workEdit",async (req,res)=>{
+  let updateId=req.body.updatedItemId;
+  let updateTask=req.body.updatedItemTask
+  try{
+    await db.query("UPDATE xxxx SET tasks=$1 WHERE id=$2",[updateTask, updateId]);
+    res.redirect("/work");
+} catch{
+  console.log(err);
+}
+})
 
+// DELETE
+app.post("/workDelete",async (req,res)=>{
+  let selectedId=req.body.selectedItemId
+  console.log(selectedId)
+await db.query("DELETE FROM xxxx WHERE id= $1",[selectedId]);
+  res.redirect("/work");
 
-
+})
 
 app.listen(port, ()=>{
   console.log(`"Server is running on port ${port}"`);

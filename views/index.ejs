@@ -1,20 +1,34 @@
 <%- include("partials/header.ejs") %>
 
-<a href="/"><button type="button" class="btn btn-success">HomeWork</button></a>
-<a href="/work"><button type="button" class="btn btn-danger">Work</button></a>
 
-<div class="container">
-    <div class="pad">
-<h2><%= dayOfWeek%>, <%= monthOfYear %>, <%= dateOfMonth %></h2>
+
+
 <%  if(locals.thoughts){%>
     <!-- Loops through thoughts list -->
-        <%  thoughts.forEach(function(task) {%>
-
+        <%  thoughts.forEach(function(toDo) {%>
+            
+            
             <!-- Lists Tasks -->
+            <div class="toDoList">
             <ul>
-            <li><input type="checkbox" id="todo">
-            <label for="todo"><%= task %></label></li>
+            <div class="toDoContent">
+            <form action="/delete" method="post">
+            <li><input type="checkbox" id="todo" onchange="this.form.submit()" name="selectedItemId" value="<%= toDo.id %>">
+            <label for="todo" id="title<%=toDo.id%>"><%= toDo.tasks %></label>
+            </form>
+
+            
+            <form class="edit" action="/edit" method="post">
+                <input type="hidden" name="updatedItemId" value="<%= toDo.id %>">
+                <input id="input<%=toDo.id%>" type="text" name="updatedItemTask" value="<%= toDo.tasks %>" autocomplete="off"
+                  autofocus="true" hidden="true" size="12"/>
+                <button id="done<%=toDo.id%>" class="edit" type="submit" hidden><img src="/images/check.svg" alt="done" height="20px"></button>
+              </form>
+            
+              <button id="edit<%=toDo.id%>" class="edit" onclick="handler('<%=toDo.id%>')"><img src="/images/pencilEdit.svg" alt="edit-pencil" height="20px"></button>
+            </div>
         </ul>
+    </div>
 <% })}%>
     
 
@@ -30,5 +44,7 @@
 <img class="pencil" src="/images/pencil.png" alt="pencil">
 <img class="eraser" src="/images/eraser.png" alt="eraser">
 <img class="ruler" src="/images/ruler.png" alt="ruler">
+
+
 
       <%- include("partials/footer.ejs") %>
