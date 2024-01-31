@@ -1,2 +1,2 @@
 # toDoList
-ToDoList v1
+Permalist, implemented PostGresDB along with added design and svgs
